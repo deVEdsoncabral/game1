@@ -4,7 +4,7 @@ import pygame
 
 WIDTH = 1200
 HEIGTH =  600
-GAME_SPEED = 10
+GAME_SPEED = 30
 SPEED = 10
 GROUND_WIDTH = 2* WIDTH
 GROUND_HEIGTH = 30
@@ -37,11 +37,16 @@ class Player (pygame.sprite.Sprite):
                 self.rect[0] -= GAME_SPEED    
             self.current_image = (self.current_image + 1) % 10
             self.image = self.image_run[self.current_image]
-        self.image = pygame.transform.scale(self.image,[100,100])
-        
+            self.image = pygame.transform.scale(self.image,[100,100])
+        def Fly(self):
+            key = pygame.key.get_pressed()
+            if key [pygame.K_SPACE]:
+                self.rect[1] -= 30
+        Fly(self)
         move_player(self)
         self.rect[1] += SPEED
-
+        self.image = pygame.image.load('./sprites/Fly.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image,[100,100])
 class Ground(pygame.sprite.Sprite):
     def __init__(self,xpos):
         pygame.sprite.Sprite.__init__(self)
@@ -94,7 +99,7 @@ while gameLoop:
 
     if is_off_screen(GroundGroup.sprites()[0]):
         GroundGroup.remove(GroundGroup.sprites()[0])
-        newGround = Ground(WIDTH - 20)
+        newGround = Ground(WIDTH - 30)
         GroundGroup.add(newGround)
     if pygame.sprite.groupcollide(playerGroup , GroundGroup,False,False):
         SPEED = 0
