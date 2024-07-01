@@ -38,15 +38,19 @@ class Player (pygame.sprite.Sprite):
             self.current_image = (self.current_image + 1) % 10
             self.image = self.image_run[self.current_image]
             self.image = pygame.transform.scale(self.image,[100,100])
+        move_player(self)
+        self.rect[1] += SPEED
+
         def Fly(self):
             key = pygame.key.get_pressed()
             if key [pygame.K_SPACE]:
                 self.rect[1] -= 30
+                self.image = pygame.image.load('./sprites/Fly.png').convert_alpha()
+                self.image = pygame.transform.scale(self.image,[100,100])    
+                print("Fly")
         Fly(self)
-        move_player(self)
-        self.rect[1] += SPEED
-        self.image = pygame.image.load('./sprites/Fly.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image,[100,100])
+        
+       
 class Ground(pygame.sprite.Sprite):
     def __init__(self,xpos):
         pygame.sprite.Sprite.__init__(self)
