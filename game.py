@@ -1,5 +1,3 @@
-
-
 import pygame
 
 WIDTH = 1200
@@ -23,6 +21,7 @@ class Player (pygame.sprite.Sprite):
                           pygame.image.load('./sprites/Run__008.png').convert_alpha(),
                           pygame.image.load('./sprites/Run__009.png').convert_alpha()
                           ]
+        self.image_fall = pygame.image.load('./sprites/Fall.png').convert_alpha()
         self.image = pygame.image.load('./sprites/Run__000.png').convert_alpha()
         self.rect =pygame.Rect(100, 100, 100, 100)
         self.mask = pygame.mask.from_surface(self.image)
@@ -50,6 +49,12 @@ class Player (pygame.sprite.Sprite):
                 print("Fly")
         Fly(self)
         
+        def fall(self):
+            key = pygame.key.get_pressed()
+            if not pygame.sprite.groupcollide(playerGroup, GroundGroup, False, False) and not key[pygame.K_SPACE]:
+                self.image = self.image_fall
+                self.image = pygame.transform.scale(self.image, [100,100]) 
+        fall(self)        
        
 class Ground(pygame.sprite.Sprite):
     def __init__(self,xpos):
@@ -75,8 +80,8 @@ BACKGRAUND = pygame.image.load('./sprites/background_03.jpg').convert_alpha()
 BACKGRAUND = pygame.transform.scale(BACKGRAUND,[WIDTH,HEIGTH])
 
 playerGroup = pygame.sprite.Group()
-player = Player()
-playerGroup.add(player)
+Player = Player()
+playerGroup.add(Player)
 
 
 GroundGroup = pygame.sprite.Group()
